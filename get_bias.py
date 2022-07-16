@@ -11,7 +11,6 @@ def returnBias(url):
 
     if data['URL'].str.contains(hostname).any():
         index = data.index[data['URL']==hostname].to_list()
-        print((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
         return((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
 
 # convert the bias value given by returnBias to a string representing the level of bias
@@ -44,4 +43,8 @@ def reliabilityToString(rel):
     elif rel < 64:
         return "Original Fact Reporting"
 
-returnBias("http://www.axios.com")
+if __name__=="__main__":
+    bias = returnBias("http://www.axios.com")
+    print(bias)
+    print(reliabilityToString(bias[0]))
+    print(biasToString(bias[1]))
