@@ -3,6 +3,7 @@ import urllib
 import pandas as pd
 from requests_html import HTML
 from requests_html import HTMLSession
+import get_bias
 
 from urllib import request
 from urllib.request import urlopen
@@ -82,6 +83,22 @@ def scrape_google(query, original_url):
 
     return links
 
+
+# main function called by web frontend
+def returnBiases(url):
+    out = []
+    articles = searchArticlesByUrl(url)
+    for article in articles:
+        art = {}
+        bias = get_bias.returnBias(article)
+        if not bias:
+            continue
+        art['url'] = article
+        art['Accuracy'] = get_bias.reliabilityToString(bias[0])
+        art['Bias'] = get_bias.biasToString(bias[1])
+        out.append(art)
+    return out
+
 if __name__ == '__main__':
     #url = 'https://www.bbc.com/news/world-europe-62189272'
     #url = "https://www.nytimes.com/2022/07/15/us/politics/joe-manchin-senate-climate-tax.html"
@@ -92,4 +109,5 @@ if __name__ == '__main__':
 
 
     #print(extractTitle(url))
-    print(searchArticlesByUrl(url))
+    #print(searchArticlesByUrl(url))
+    print(returnBiases(url))

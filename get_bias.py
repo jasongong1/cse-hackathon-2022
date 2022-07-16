@@ -12,6 +12,8 @@ def returnBias(url):
     if data['URL'].str.contains(hostname).any():
         index = data.index[data['URL']==hostname].to_list()
         return((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
+    else:
+        return 0
 
 # convert the bias value given by returnBias to a string representing the level of bias
 def biasToString(bias):
@@ -21,8 +23,12 @@ def biasToString(bias):
         return "Strongly Left"
     elif bias < -6:
         return "Moderately Left"
-    elif bias < 6:
+    elif bias < -2:
+        return "Slightly Left"
+    elif bias < 2:
         return "Neutral"
+    elif bias < 6:
+        return "Slightly Right"
     elif bias < 18:
         return "Moderately Right"
     elif bias < 30:
