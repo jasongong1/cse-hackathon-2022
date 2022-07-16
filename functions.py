@@ -3,10 +3,6 @@ from urllib.request import urlopen
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from googlesearch import search
-import requests
-
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5)\
-            AppleWebKit/537.36 (KHTML, like Gecko) Cafari/537.36'}
 
 def removeLastChar(elem, arr):
     index_pos = len(arr) - arr[::-1].index(elem) - 1
