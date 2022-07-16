@@ -4,13 +4,15 @@ from urllib import parse
 
 # Given a full URL, finds the reliability and bias ratings for that url and returns them as a tuple (reliability, bias) 
 def returnBias(url):
-
+    print(url)
     hostname = (parse.urlsplit(url)[1])[4:]
 
     data = read_csv('media_bias_chart_urls.csv')
 
     if data['URL'].str.contains(hostname).any():
+        print(hostname)
         index = data.index[data['URL']==hostname].to_list()
+        print(index)
         return((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
     else:
         return 0

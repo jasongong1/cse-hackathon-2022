@@ -99,6 +99,8 @@ def returnBiases(url):
             art['Accuracy_num'] = bias[0]
             art['Bias'] = get_bias.biasToString(bias[1])
             out.append(art)
+        else:
+            #print(article)
 
     # sort
     out = sorted(out, key=lambda d: d['Accuracy_num'], reverse=True) 
@@ -122,8 +124,8 @@ if __name__ == '__main__':
     #url = "https://www.theguardian.com/us-news/2022/jul/15/ivana-trump-donald-trump-wife-death-cause"
 
     #url = "https://www.msnbc.com/rachel-maddow-show/maddowblog/republicans-balk-bill-protect-interstate-abortion-travel-rcna38404"
-    url = "https://www.washingtonpost.com/politics/2022/07/15/secret-service-subpoena-erased-texts/"
-
+    #url = "https://www.washingtonpost.com/politics/2022/07/15/secret-service-subpoena-erased-texts/"
+    url = "https://www.theguardian.com/australia-news/2022/jul/16/anthony-albanese-reverses-decision-to-scrap-pandemic-leave-payments-after-national-cabinet-meets"
 
     #print(extractTitle(url))
     #print(searchArticlesByUrl(url))
