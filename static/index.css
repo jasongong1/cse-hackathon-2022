@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+#search-pane {
+    height: 200px;
+    /* background-color: blue; */
+}
+
+#main-logo {
+    height: 150px;
+    display: flex;
+    justify-content: center;
+}
+img {
+    height: 100%;
+}
+
+#search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: red; */
+}
+
+.search-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* give it a height to make it in the middle */
+    height: 100%;
+}
+
+#result-pane {
+    flex: 1;
+    padding: 10px;
+}
+
+#search-input {
+    width: 30%;
+}

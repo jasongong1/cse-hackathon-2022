@@ -11,7 +11,7 @@ def returnBias(url):
 
     for idx, knownHost in enumerate(data['URL']):
         if knownHost in hostname:
-            return((data['Vertical Rank'][idx], data['Horizontal Rank'][idx]))
+            return((data['Vertical Rank'][idx], data['Horizontal Rank'][idx], data['News Source'][idx]))
 
 
 # STOP GOLFING!
@@ -55,7 +55,7 @@ def reliabilityToString(rel):
     elif rel < 56:
         return "Factual Reporting"
     elif rel < 64:
-        return "Original Factual Reporting"
+        return "Very High Factual Reporting"
 
 if __name__=="__main__":
     bias = returnBias("http://www.axios.com")

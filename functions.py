@@ -132,6 +132,7 @@ def returnBiases(url):
             art['Accuracy'] = get_bias.reliabilityToString(bias[0])
             art['Accuracy_num'] = int(bias[0])
             art['Bias'] = get_bias.biasToString(bias[1])
+            art['source'] = bias[2]
             out.append(art)
 
     # sort
@@ -148,7 +149,7 @@ def returnBiases(url):
     art['Bias'] = get_bias.biasToString(bias[1])
     out.insert(0,art)
 
-    return out
+    return out[1:] if out else []
 
 if __name__ == '__main__':
     #url = 'https://www.bbc.com/news/world-europe-62189272'
