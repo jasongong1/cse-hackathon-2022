@@ -10,8 +10,6 @@ def returnBias(url):
     data = read_csv('media_bias_chart_urls.csv')
 
     for idx, knownHost in enumerate(data['URL']):
-        print(idx)
-        print(knownHost)
         if knownHost in hostname:
             return((data['Vertical Rank'][idx], data['Horizontal Rank'][idx]))
 
