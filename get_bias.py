@@ -1,6 +1,8 @@
 from pandas import read_csv
 from urllib import parse
 
+
+# Given a full URL, finds the reliability and bias ratings for that url and returns them as a tuple (reliability, bias) 
 def returnBias(url):
 
     hostname = (parse.urlsplit(url)[1])[4:]
