@@ -1,7 +1,12 @@
+from urllib import request
 from urllib.request import urlopen
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from googlesearch import search
+import requests
+
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5)\
+            AppleWebKit/537.36 (KHTML, like Gecko) Cafari/537.36'}
 
 def removeLastChar(elem, arr):
     index_pos = len(arr) - arr[::-1].index(elem) - 1
@@ -28,7 +33,7 @@ def searchArticlesByTitle(url):
         domain = removeLastChar('.', domain)
         query = f'{title} -inurl:{domain}'
         articles = list()
-        for item in search(query, num=20, stop=10, pause=2):
+        for item in search(query, num=30, stop=30, pause=2):
             articles.append(item)
         return articles
     except:
