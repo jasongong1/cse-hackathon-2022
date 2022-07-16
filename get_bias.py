@@ -13,6 +13,35 @@ def returnBias(url):
         index = data.index[data['URL']==hostname].to_list()
         print((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
         return((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
-        
+
+# convert the bias value given by returnBias to a string representing the level of bias
+def biasToString(bias):
+    if bias < -30:
+        return "Very Strongly Left"
+    elif bias < -18:
+        return "Strongly Left"
+    elif bias < -6:
+        return "Moderately Left"
+    elif bias < 6:
+        return "Neutral"
+    elif bias < 18:
+        return "Moderately Right"
+    elif bias < 30:
+        return "Strongly Right"
+    elif bias < 42:
+        return "Very Strongly Right"
+
+# convert the reliability value given by returnBias to a string representing the level of fact reporting
+def reliabilityToString(rel):
+    if rel < 8:
+        return "Inaccurate/Fabricated"
+    elif rel < 24:
+        return "Misleading/Selective"
+    elif rel < 48:
+        return "Variable, Some Fact Reporting"
+    elif rel < 56:
+        return "Fact Reporting"
+    elif rel < 64:
+        return "Original Fact Reporting"
 
 returnBias("http://www.axios.com")
