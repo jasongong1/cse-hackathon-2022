@@ -9,13 +9,21 @@ def returnBias(url):
 
     data = read_csv('media_bias_chart_urls.csv')
 
-    if data['URL'].str.contains(hostname).any():
-        index = data.index[data['URL']==hostname].to_list()
-        if (len(index) == 0):
-            return ((100, 100))
-        return((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
-    else:
-        return 0
+    for idx, knownHost in enumerate(data['URL']):
+        print(idx)
+        print(knownHost)
+        if knownHost in hostname:
+            return((data['Vertical Rank'][idx], data['Horizontal Rank'][idx]))
+
+
+# STOP GOLFING!
+    # if data['URL'].str.contains(hostname).any():
+    #     index = data.index[data['URL']==hostname].to_list()
+    #     if (len(index) == 0):
+    #         return ((100, 100))
+    #     return((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
+    # else:
+    #     return 0
 
 # convert the bias value given by returnBias to a string representing the level of bias
 def biasToString(bias):
@@ -45,11 +53,11 @@ def reliabilityToString(rel):
     elif rel < 24:
         return "Misleading/Selective"
     elif rel < 48:
-        return "Variable, Some Fact Reporting"
+        return "Variable, Some Factual Reporting"
     elif rel < 56:
-        return "Fact Reporting"
+        return "Factual Reporting"
     elif rel < 64:
-        return "Original Fact Reporting"
+        return "Original Factual Reporting"
 
 if __name__=="__main__":
     bias = returnBias("http://www.axios.com")

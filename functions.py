@@ -1,9 +1,14 @@
 import requests
 import urllib
-import pandas as pd
 from requests_html import HTML
 from requests_html import HTMLSession
 import get_bias
+
+import yake
+
+kw_extractor = yake.KeywordExtractor(lan="en",n=2,dedupLim=0.5,top=8)
+
+
 
 from urllib import request
 from urllib.request import urlopen
@@ -18,10 +23,16 @@ def removeLastChar(elem, arr):
 # Extract title from url
 def extractTitle(url):
     #try:
-    fileObj = urlopen(url)
-    html = fileObj.read()
-    title = BeautifulSoup(html, 'html.parser').title.text
+    # fileObj = urlopen(url)
+    # html = fileObj.read()
+    # title = BeautifulSoup(html, 'html.parser').select('h1.listing-name')[0].text.strip()
+
+    
+    req_from_url = requests.get(url)
+    text_from_req = req_from_url.text
+    title = BeautifulSoup(text_from_req, 'html.parser').select('h1')[0].text.strip()
     #title = removeLastChar('-', title)
+    print(title)
     return title
     #except:
     #    return 0
@@ -30,18 +41,35 @@ def extractTitle(url):
 def searchArticlesByUrl(url):
     try:
         title = extractTitle(url)
+
+        kw_list = extractKeywords(title)
+        
         if (title == "error"):
             return "error1"
+
         domain = urlparse(url).netloc
         domain = removeLastChar('.', domain)
-        query = f'{title} -inurl:{domain}'
+
+        query = ""
+
+        for kw in kw_list:
+            query += kw[0] + " "
+
+        query += f"-inurl:{domain}"
+
+        print(query)
+
         articles = []
-        tmp = scrape_google(query+"article", url)
-        for item in tmp:
+        for item in scrape_google(query, url):
             articles.append(item)
         return articles
     except:
         return "error"
+
+def extractKeywords(titleStr):
+    kw_list = kw_extractor.extract_keywords(titleStr)
+    print(kw_list)
+    return kw_list
 
 def get_source(url):
     """Return the source code for the provided URL. 
@@ -64,7 +92,7 @@ def get_source(url):
 def scrape_google(query, original_url):
 
     query = urllib.parse.quote_plus(query)
-    response = get_source("https://www.google.co.uk/search?q=" + query)
+    response = get_source("https://www.google.com/search?q=" + query)
 
     links = list(response.html.absolute_links)
     google_domains = ('https://www.google.', 
@@ -76,17 +104,24 @@ def scrape_google(query, original_url):
                       'https://maps.google.' ,
                       'https://www.youtube.')
 
-    for url in links[:]:
-        if url.startswith(google_domains) or url == original_url:
-            links.remove(url)
 
-    return links
+    newlinks = []
+
+    for url in links:
+        if (url.startswith(google_domains)
+            or url == original_url
+            or any(dm in url for dm in google_domains)):
+            continue
+        newlinks.append(url)
+    return newlinks
 
 
 # main function called by web frontend
 def returnBiases(url):
     out = []
     articles = searchArticlesByUrl(url)
+
+    print(articles)
 
     # add searched articles to output
     for article in articles:
