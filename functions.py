@@ -88,15 +88,32 @@ def scrape_google(query, original_url):
 def returnBiases(url):
     out = []
     articles = searchArticlesByUrl(url)
+
+    # add searched articles to output
     for article in articles:
         art = {}
         bias = get_bias.returnBias(article)
-        if not bias:
-            continue
-        art['url'] = article
-        art['Accuracy'] = get_bias.reliabilityToString(bias[0])
-        art['Bias'] = get_bias.biasToString(bias[1])
-        out.append(art)
+        if bias:
+            art['url'] = article
+            art['Accuracy'] = get_bias.reliabilityToString(bias[0])
+            art['Accuracy_num'] = bias[0]
+            art['Bias'] = get_bias.biasToString(bias[1])
+            out.append(art)
+
+    # sort
+    out = sorted(out, key=lambda d: d['Accuracy_num'], reverse=True) 
+
+    # add original article to output
+    art = {}
+    bias = get_bias.returnBias(url)
+    if not bias:
+        return out
+    art['url'] = url
+    art['Accuracy'] = get_bias.reliabilityToString(bias[0])
+    art['Accuracy_num'] = bias[0]
+    art['Bias'] = get_bias.biasToString(bias[1])
+    out.insert(0,art)
+
     return out
 
 if __name__ == '__main__':
