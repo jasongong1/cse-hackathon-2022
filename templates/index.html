@@ -42,19 +42,15 @@
     </style>
 </head>
 <body>
+    <div id="header">
+    </div>
     <div id="search-pane">
-        <div class="search-group">
-            <div class="form-outline">
-              <input type="search" id="form1" class="form-control" />
-              <label class="form-label" for="form1">Search</label>
-            </div>
-            <button type="button" class="btn btn-primary">
-              <i class="fas fa-search"></i>
-            </button>
-        </div>
+      This is the part of put search url  
+      <input id="search-input" type="text" placeholder="Search Url" >
+      <button id="search-btn" type="Submit">Submit</button>
     </div>
     <div id="result-pane">
-        <table class="table">
+        <table id="result-table" class="table">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -64,32 +60,69 @@
                 <th scope="col">Political Leaning</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Article 1</td>
-                <td>xxx.com</td>
-                <td>80%</td>
-                <td>AAAAAAAAAAAAAAAAAAAA</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Article 2</td>
-                <td>xxx.com</td>
-                <td>60%</td>
-                <td>BBBBBBBBBBBBBBBBB</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Article 3</td>
-                <td>xxx.com</td>
-                <td>100%</td>
-                <td>CCCCCCCCCCCCCCCCCCCC
-                    
-                </td>
-              </tr>
+            <tbody id="table-body">
             </tbody>
         </table>
     </div>
+
+    <script>
+
+      function searchByUrl(url) {
+        console.log("get innnnnn");
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/', true);
+        xhr.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            console.log("wanna see the response")
+            console.log(this.response)
+            let result = JSON.parse(this.response)['data']
+            console.log(result)
+
+            // get the table with id="result_table"
+            let table = document.getElementById("result-table")
+            let body = document.getElementById("table-body")
+
+            // check if the body has result, if yes, remove everything first
+            while (body.hasChildNodes()) {
+              body.removeChild(body.firstChild);
+            }
+
+
+            for (const res of result) {
+              let new_row = document.createElement('tr');
+              let data_1 = document.createElement("td");
+              data_1.innerHTML = res["id"];
+              let data_2 = document.createElement("td");
+              data_2.innerHTML = res["title"];
+              let data_3 = document.createElement("td");
+              data_3.innerHTML = res["url"];
+              let data_4 = document.createElement("td");
+              data_4.innerHTML = res["reliability"];
+              let data_5 = document.createElement("td");
+              data_5.innerHTML = res["politicalLeaning"];
+
+              new_row.appendChild(data_1);
+              new_row.appendChild(data_2);
+              new_row.appendChild(data_3);
+              new_row.appendChild(data_4);
+              new_row.appendChild(data_5);
+              body.appendChild(new_row)
+            }
+
+
+          }
+        }
+
+        xhr.send(JSON.stringify({"url": url}))
+
+      }
+
+      document.getElementById('search-btn').style.color = "red";
+      document.getElementById('search-btn').addEventListener("click", () => {
+        console.log("click!!!!!!!!!!")
+        console.log(document.getElementById('search-input').value)
+        searchByUrl(document.getElementById('search-input').value);
+      });
+    </script>
 </body>
 </html>
