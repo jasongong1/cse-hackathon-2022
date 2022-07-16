@@ -26,6 +26,13 @@
             background-color: white;
         }
 
+        #search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
         .search-group {
             display: flex;
             flex-direction: row;
@@ -36,27 +43,32 @@
         }
 
         #result-pane {
-            background-color: lightgoldenrodyellow;
             flex: 1;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            margin: 2px;
         }
     </style>
 </head>
 <body>
-    <div id="header">
-    </div>
     <div id="search-pane">
-      This is the part of put search url  
-      <input id="search-input" type="text" placeholder="Search Url" >
-      <button id="search-btn" type="Submit">Submit</button>
+      <img src="../static/logo.png" alt="Just our team logo">
+      <div id="search-container">
+          <input id="search-input" type="text" placeholder="Search Url" >
+          <button id="search-btn" type="Submit">Submit</button>
+      </div>
     </div>
     <div id="result-pane">
         <table id="result-table" class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
                 <th scope="col">URL</th>
-                <th scope="col">Reliability</th>
+                <th scope="col">Accuracy</th>
+                <th scope="col">Accuracy Number</th>
                 <th scope="col">Political Leaning</th>
               </tr>
             </thead>
@@ -68,7 +80,6 @@
     <script>
 
       function searchByUrl(url) {
-        console.log("get innnnnn");
         let xhr = new XMLHttpRequest();
         xhr.open('POST', '/', true);
         xhr.onreadystatechange = function() {
@@ -90,18 +101,15 @@
 
             for (const res of result) {
               let new_row = document.createElement('tr');
-              let data_1 = document.createElement("td");
-              data_1.innerHTML = res["id"];
               let data_2 = document.createElement("td");
-              data_2.innerHTML = res["title"];
+              data_2.innerHTML = res["url"];
               let data_3 = document.createElement("td");
-              data_3.innerHTML = res["url"];
+              data_3.innerHTML = res["Accuracy"];
               let data_4 = document.createElement("td");
-              data_4.innerHTML = res["reliability"];
+              data_4.innerHTML = res["Accuracy_num"];
               let data_5 = document.createElement("td");
-              data_5.innerHTML = res["politicalLeaning"];
+              data_5.innerHTML = res["Bias"];
 
-              new_row.appendChild(data_1);
               new_row.appendChild(data_2);
               new_row.appendChild(data_3);
               new_row.appendChild(data_4);
@@ -117,9 +125,7 @@
 
       }
 
-      document.getElementById('search-btn').style.color = "red";
       document.getElementById('search-btn').addEventListener("click", () => {
-        console.log("click!!!!!!!!!!")
         console.log(document.getElementById('search-input').value)
         searchByUrl(document.getElementById('search-input').value);
       });

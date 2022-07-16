@@ -11,6 +11,8 @@ def returnBias(url):
 
     if data['URL'].str.contains(hostname).any():
         index = data.index[data['URL']==hostname].to_list()
+        if (len(index) == 0):
+            return ((100, 100))
         return((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
     else:
         return 0
@@ -54,3 +56,4 @@ if __name__=="__main__":
     print(bias)
     print(reliabilityToString(bias[0]))
     print(biasToString(bias[1]))
+    print(returnBias("https://www.theguardian.com/australia-news/2022/jul/16/anthony-albanese-reverses-decision-to-scrap-pandemic-leave-payments-after-national-cabinet-meets"))

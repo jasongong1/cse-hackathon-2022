@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import json
+from functions import returnBiases
 
 app = Flask(__name__)
 
@@ -14,14 +15,11 @@ def search_url():
     
 
     # use the url past from the frontend, get the result, and pass back to frontend
-    items = [
-        {'id': 1, 'title': "article1", 'url': "xxxx.com", 'reliability': "left", 'politicalLeaning': "xxxxx"},
-        {'id': 2, 'title': "article2", 'url': "xxxx.com", 'reliability': "right", 'politicalLeaning': "xxxxx"},
-        {'id': 3, 'title': "article3", 'url': "xxxx.com", 'reliability': "80", 'politicalLeaning': "xxxxx"},
-        {'id': 4, 'title': "article4", 'url': "xxxx.com", 'reliability': "80%", 'politicalLeaning': "xxxxx"}
-    ]
-    
-    return json.dumps({'data': items})
+    result = returnBiases(data["url"])
+    if (len(result) == 0):
+        result = [{"url": "xxxxxx", "Accuracy": "30", "Accuracy_num": 20, "Bias": "askcjwoef"}]
+
+    return json.dumps({'data': result})
 
 
 

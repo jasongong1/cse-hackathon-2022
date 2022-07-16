@@ -9,7 +9,6 @@ from urllib import request
 from urllib.request import urlopen
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
-from googlesearch import search
 #from readability.readability import Document
 
 def removeLastChar(elem, arr):
@@ -96,7 +95,7 @@ def returnBiases(url):
         if bias:
             art['url'] = article
             art['Accuracy'] = get_bias.reliabilityToString(bias[0])
-            art['Accuracy_num'] = bias[0]
+            art['Accuracy_num'] = int(bias[0])
             art['Bias'] = get_bias.biasToString(bias[1])
             out.append(art)
 
@@ -110,7 +109,7 @@ def returnBiases(url):
         return out
     art['url'] = url
     art['Accuracy'] = get_bias.reliabilityToString(bias[0])
-    art['Accuracy_num'] = bias[0]
+    art['Accuracy_num'] = int(bias[0])
     art['Bias'] = get_bias.biasToString(bias[1])
     out.insert(0,art)
 
