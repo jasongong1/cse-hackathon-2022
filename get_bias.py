@@ -12,7 +12,7 @@ def returnBias(url):
     if data['URL'].str.contains(hostname).any():
         index = data.index[data['URL']==hostname].to_list()
         if (len(index) == 0):
-            return ((100, 100))
+            return ((0, 0)) # this part need to be fixed (consider those situations that we actually can't receive the result, or just use those links actually work)
         return((data['Vertical Rank'][index[0]], data['Horizontal Rank'][index[0]]))
     else:
         return 0

@@ -20,10 +20,18 @@
             flex-direction: column;
             min-height: 100vh;
         }
+
         
         #search-pane {
             height: 200px;
             background-color: white;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            margin: 2px;
         }
 
         #search-container {
@@ -46,30 +54,28 @@
             flex: 1;
         }
 
-        img {
-            width: 150px;
-            height: 150px;
-            position: absolute;
-            margin: 2px;
+        #search-input {
+            width: 30%;
         }
+
     </style>
 </head>
 <body>
     <div id="search-pane">
       <img src="../static/logo.png" alt="Just our team logo">
       <div id="search-container">
-          <input id="search-input" type="text" placeholder="Search Url" >
-          <button id="search-btn" type="Submit">Submit</button>
+        <input id="search-input" class="form-control" id="typeURL" type="text"  placeholder="Search Url" required>
+        <button id="search-btn" class="btn btn-success" type="submit"><i class="fa fa-search"></i></button>
       </div>
     </div>
     <div id="result-pane">
-        <table id="result-table" class="table">
-            <thead>
+        <table id="result-table" class="table table-hover">
+            <thead class="table-dark">
               <tr>
-                <th scope="col">URL</th>
-                <th scope="col">Accuracy</th>
-                <th scope="col">Accuracy Number</th>
-                <th scope="col">Political Leaning</th>
+                <th scope="col"><b>URL</b></th>
+                <th scope="col"><b>Accuracy</b></th>
+                <th scope="col"><b>Accuracy Number</b></th>
+                <th scope="col"><b>Political Leaning</b></th>
               </tr>
             </thead>
             <tbody id="table-body">
@@ -78,8 +84,17 @@
     </div>
 
     <script>
-
       function searchByUrl(url) {
+        let body = document.getElementById("table-body")
+        // check if the body has result, if yes, remove everything first
+        while (body.hasChildNodes()) {
+        body.removeChild(body.firstChild);
+        }
+        // prevent empty input
+        if (url == "") {
+            console.log("HAHA");
+            return;
+        }
         let xhr = new XMLHttpRequest();
         xhr.open('POST', '/', true);
         xhr.onreadystatechange = function() {
@@ -91,18 +106,18 @@
 
             // get the table with id="result_table"
             let table = document.getElementById("result-table")
-            let body = document.getElementById("table-body")
+            // let body = document.getElementById("table-body")
 
-            // check if the body has result, if yes, remove everything first
-            while (body.hasChildNodes()) {
-              body.removeChild(body.firstChild);
-            }
+            // // check if the body has result, if yes, remove everything first
+            // while (body.hasChildNodes()) {
+            //   body.removeChild(body.firstChild);
+            // }
 
 
             for (const res of result) {
               let new_row = document.createElement('tr');
               let data_2 = document.createElement("td");
-              data_2.innerHTML = res["url"];
+              data_2.innerHTML = `<a href="`+ res["url"] +`target="_blank">` + res["url"] + `</a>`
               let data_3 = document.createElement("td");
               data_3.innerHTML = res["Accuracy"];
               let data_4 = document.createElement("td");
