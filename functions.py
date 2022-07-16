@@ -3,10 +3,11 @@ from urllib.request import urlopen
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from googlesearch import search
+#from readability.readability import Document
 
-def removeLastChar(elem, arr):
-    index_pos = len(arr) - arr[::-1].index(elem) - 1
-    return arr[:index_pos]
+# def removeLastChar(elem, arr):
+#     index_pos = len(arr) - arr[::-1].index(elem) - 1
+#     return arr[:index_pos]
 
 # Extract title from url
 def extractTitle(url):
@@ -14,7 +15,7 @@ def extractTitle(url):
         fileObj = urlopen(url)
         html = fileObj.read()
         title = BeautifulSoup(html, 'html.parser').title.text
-        title = removeLastChar('-', title)
+        #title = removeLastChar('-', title)
         return title
     except:
         return "error"
@@ -24,7 +25,7 @@ def searchArticlesByTitle(url):
     try:
         title = extractTitle(url)
         if (title == "error"):
-            return "error"
+            return "error1"
         domain = urlparse(url).netloc
         domain = removeLastChar('.', domain)
         query = f'{title} -inurl:{domain}'
@@ -37,6 +38,8 @@ def searchArticlesByTitle(url):
 
 
 if __name__ == '__main__':
-    url = 'https://www.bbc.com/news/world-europe-62189272'
+    #url = 'https://www.bbc.com/news/world-europe-62189272'
+    #url = "https://www.nytimes.com/2022/07/15/us/politics/joe-manchin-senate-climate-tax.html"
+    url = "https://www.theguardian.com/us-news/2022/jul/15/ivana-trump-donald-trump-wife-death-cause"
     print(extractTitle(url))
-    print(searchArticlesByTitle(url))
+    # print(searchArticlesByTitle(url))
