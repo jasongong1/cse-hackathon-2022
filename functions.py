@@ -22,6 +22,8 @@ def extractTitle(url):
 def searchArticlesByTitle(url):
     try:
         title = extractTitle(url)
+        if (title == "error"):
+            return "error"
         domain = urlparse(url).netloc
         domain = removeLastChar('.', domain)
         query = f'{title} -inurl:{domain}'
