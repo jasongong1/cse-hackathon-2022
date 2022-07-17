@@ -69,9 +69,19 @@ def extractTitle(url):
     
     req_from_url = requests.get(url)
     text_from_req = req_from_url.text
-    title = BeautifulSoup(text_from_req, 'html.parser').select('h1')[0].text.strip()
+    print(url)
+    try:
+        titles = BeautifulSoup(text_from_req, 'html.parser')
+        title = titles.select('h1')[0].text.strip()
+        if "404" in title:
+            return url
+        print(title)
+    except:
+        return url
+        
+        print("hi")
     #title = removeLastChar('-', title)
-    print(title)
+    #print(title)
     return title
     #except:
     #    return 0
@@ -172,6 +182,7 @@ def returnBiases(url):
             art['url'] = article
             art['Accuracy'] = reliabilityStrList[relIdx]
             art['accuracy_color'] = reliabilityColorList[relIdx]
+            art['title'] = extractTitle(article)
             art['Accuracy_num'] = int(bias[0])
             art['Bias'] = biasStrList[biasIdx]
             art['bias_color'] = biasColorList[biasIdx]
@@ -192,11 +203,13 @@ def returnBiases(url):
 
     art['url'] = url
     art['Accuracy'] = reliabilityStrList[relIdx]
+    art['title'] = extractTitle(url)
     art['Accuracy_num'] = int(bias[0])
     art['Bias'] = biasStrList[biasIdx]
     out.insert(0,art)
 
-    return out[1:] if out else []
+    #return out[1:] if out else []
+    return out
 
 if __name__ == '__main__':
     #url = 'https://www.bbc.com/news/world-europe-62189272'
@@ -207,6 +220,6 @@ if __name__ == '__main__':
     url = "https://www.washingtonpost.com/politics/2022/07/15/secret-service-subpoena-erased-texts/"
 
 
-    #print(extractTitle(url))
+    print(extractTitle("https://www.wsj.com/articles/jan-6-committee-subpoenas-secret-service-for-deleted-text-messages-11657943958"))
     #print(searchArticlesByUrl(url))
-    print(returnBiases(url))
+    #print(returnBiases(url))

@@ -30,7 +30,7 @@
             <thead class="table-dark">
               <tr>
                 <th style="width: 6%" scope="col"><b>Source</b></th>
-                <th style="width: 72%" scope="col"><b>URL</b></th>
+                <th style="width: 72%" scope="col"><b>Title</b></th>
                 <th style="width: 10%" scope="col"><b>Accuracy</b></th>
                 <!-- <th scope="col"><b>Accuracy Number</b></th> -->
                 <th style="width: 12%" scope="col"><b>Political Leaning</b></th>
@@ -77,6 +77,7 @@
               let data_1 = document.createElement("td");
               data_1.innerHTML = res["source"]
               let data_2 = document.createElement("td");
+
               // data_2.innerHTML = `<a href="`+ res["url"] +`">` + res["url"] + `</a>`
               
               let data_target = document.createElement('a');
@@ -85,8 +86,7 @@
               data_target.innerText = res["url"];
 
               data_2.appendChild(data_target);
-
-
+              data_2.innerHTML = `<a href="`+ res["url"] +`">` + res["title"] + `</a>`
               let data_3 = document.createElement("td");
               data_3.innerHTML = res["Accuracy"];
               data_3.style.backgroundColor = res["accuracy_color"];
