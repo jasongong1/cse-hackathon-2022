@@ -30,7 +30,12 @@ def extractTitle(url):
     
     req_from_url = requests.get(url)
     text_from_req = req_from_url.text
-    title = BeautifulSoup(text_from_req, 'html.parser').select('h1')[0].text.strip()
+    try:
+        title = BeautifulSoup(text_from_req, 'html.parser').select('h1')[0].text.strip()
+    except:
+        return url
+        
+        print("hi")
     #title = removeLastChar('-', title)
     print(title)
     return title
@@ -129,6 +134,7 @@ def returnBiases(url):
         bias = get_bias.returnBias(article)
         if bias:
             art['url'] = article
+            art['title'] = extractTitle(article)
             art['Accuracy'] = get_bias.reliabilityToString(bias[0])
             art['Accuracy_num'] = int(bias[0])
             art['Bias'] = get_bias.biasToString(bias[1])
@@ -144,12 +150,14 @@ def returnBiases(url):
     if not bias:
         return out
     art['url'] = url
+    art['title'] = extractTitle(article)
     art['Accuracy'] = get_bias.reliabilityToString(bias[0])
     art['Accuracy_num'] = int(bias[0])
     art['Bias'] = get_bias.biasToString(bias[1])
     out.insert(0,art)
 
-    return out[1:] if out else []
+    #return out[1:] if out else []
+    return out
 
 if __name__ == '__main__':
     #url = 'https://www.bbc.com/news/world-europe-62189272'
