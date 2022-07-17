@@ -203,9 +203,11 @@ def returnBiases(url):
 
     art['url'] = url
     art['Accuracy'] = reliabilityStrList[relIdx]
+    art['accuracy_color'] = reliabilityColorList[relIdx]
     art['title'] = extractTitle(url)
     art['Accuracy_num'] = int(bias[0])
     art['Bias'] = biasStrList[biasIdx]
+    art['bias_color'] = biasColorList[biasIdx]
     art['source'] = bias[2]
     out.insert(0,art)
 
