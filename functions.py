@@ -30,14 +30,19 @@ def extractTitle(url):
     
     req_from_url = requests.get(url)
     text_from_req = req_from_url.text
+    print(url)
     try:
-        title = BeautifulSoup(text_from_req, 'html.parser').select('h1')[0].text.strip()
+        titles = BeautifulSoup(text_from_req, 'html.parser')
+        title = titles.select('h1')[0].text.strip()
+        if "404" in title:
+            return url
+        print(title)
     except:
         return url
         
         print("hi")
     #title = removeLastChar('-', title)
-    print(title)
+    #print(title)
     return title
     #except:
     #    return 0
@@ -150,7 +155,7 @@ def returnBiases(url):
     if not bias:
         return out
     art['url'] = url
-    art['title'] = extractTitle(article)
+    art['title'] = extractTitle(url)
     art['Accuracy'] = get_bias.reliabilityToString(bias[0])
     art['Accuracy_num'] = int(bias[0])
     art['Bias'] = get_bias.biasToString(bias[1])
@@ -168,6 +173,6 @@ if __name__ == '__main__':
     url = "https://www.washingtonpost.com/politics/2022/07/15/secret-service-subpoena-erased-texts/"
 
 
-    #print(extractTitle(url))
+    print(extractTitle("https://www.wsj.com/articles/jan-6-committee-subpoenas-secret-service-for-deleted-text-messages-11657943958"))
     #print(searchArticlesByUrl(url))
-    print(returnBiases(url))
+    #print(returnBiases(url))
