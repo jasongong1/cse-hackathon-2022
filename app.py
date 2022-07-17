@@ -1,22 +1,27 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+import json
+from functions import returnBiases
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
+    return render_template('index.html')
 
-    items = [
-        {'id': 1, 'title': "article1", 'url': "xxxx.com", 'reliablity': "80%", 'political leaning': "xxxxx"},
-        {'id': 2, 'title': "article2", 'url': "xxxx.com", 'reliablity': "80%", 'political leaning': "xxxxx"},
-        {'id': 3, 'title': "article3", 'url': "xxxx.com", 'reliablity': "80%", 'political leaning': "xxxxx"},
-        {'id': 4, 'title': "article4", 'url': "xxxx.com", 'reliablity': "80%", 'political leaning': "xxxxx"}
-    ]
+@app.route("/", methods=['POST'])
+def search_url():
+    data = json.loads(request.data)
+    print(data["url"])
+    
 
-    return render_template('index.html', items=items)
+    # use the url past from the frontend, get the result, and pass back to frontend
+    result = returnBiases(data["url"])
+    if (len(result) == 0):
+        # result = [{"url": "xxxxxx", "Accuracy": "30", "Accuracy_num": 20, "Bias": "askcjwoef"}]
+        return json.dumps({'error': True})
+    return json.dumps({'data': result})
 
-@app.route("/about/<username>")
-def about_page(username):
-    return f'<h1>About page with the user name: {username}</h1>'
+
 
 if __name__ == "__main__":
     app.run(debug = True)
