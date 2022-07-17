@@ -206,6 +206,7 @@ def returnBiases(url):
     art['title'] = extractTitle(url)
     art['Accuracy_num'] = int(bias[0])
     art['Bias'] = biasStrList[biasIdx]
+    art['source'] = bias[2]
     out.insert(0,art)
 
     #return out[1:] if out else []
