@@ -23,39 +23,38 @@ def returnBias(url):
     # else:
     #     return 0
 
-# convert the bias value given by returnBias to a string representing the level of bias
-def biasToString(bias):
+def biasToIdx(bias):
     if bias < -30:
-        return "Very Strongly Left"
+        return 0
     elif bias < -18:
-        return "Strongly Left"
+        return 1
     elif bias < -6:
-        return "Moderately Left"
+        return 2
     elif bias < -2:
-        return "Slightly Left"
+        return 3
     elif bias < 2:
-        return "Neutral"
+        return 4
     elif bias < 6:
-        return "Slightly Right"
+        return 5
     elif bias < 18:
-        return "Moderately Right"
+        return 6
     elif bias < 30:
-        return "Strongly Right"
+        return 7
     elif bias < 42:
-        return "Very Strongly Right"
+        return 8
 
-# convert the reliability value given by returnBias to a string representing the level of fact reporting
-def reliabilityToString(rel):
+
+def reliabilityToIdx(rel):
     if rel < 8:
-        return "Inaccurate/Fabricated"
+        return 0
     elif rel < 24:
-        return "Misleading/Selective"
+        return 1
     elif rel < 48:
-        return "Variable, Some Factual Reporting"
+        return 2
     elif rel < 56:
-        return "Factual Reporting"
+        return 3
     elif rel < 64:
-        return "Very High Factual Reporting"
+        return 4
 
 if __name__=="__main__":
     bias = returnBias("http://www.axios.com")

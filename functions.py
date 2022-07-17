@@ -8,13 +8,52 @@ import yake
 
 kw_extractor = yake.KeywordExtractor(lan="en",n=2,dedupLim=0.5,top=8)
 
-
-
 from urllib import request
 from urllib.request import urlopen
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 #from readability.readability import Document
+
+biasStrList = [
+    "Very Strongly Left",
+    "Strongly Left",
+    "Moderately Left",
+    "Slightly Left",
+    "Neutral",
+    "Slightly Right",
+    "Moderately Right",
+    "Strongly Right",
+    "Very Strongly Right"
+]
+
+biasColorList = [
+    "#2f2bab",
+    "#5854b8",
+    "#8684c4",
+    "#cbc9f0",
+    "#fff",
+    "#ffd7d4",
+    "#ffaea8",
+    "#e35146",
+    "#c9190c"
+]
+
+reliabilityStrList = [
+    "Inaccurate/Fabricated",
+    "Misleading/Selective",
+    "Some Factual Reporting",
+    "Factual Reporting",
+    "Highly Factual Reporting"
+]
+
+reliabilityColorList = [
+    "#fff",
+    "#a5f0c4",
+    "#3db36d",
+    "#69c990",
+    "#109c4a"
+]
+
 
 def removeLastChar(elem, arr):
     index_pos = len(arr) - arr[::-1].index(elem) - 1
@@ -138,11 +177,15 @@ def returnBiases(url):
         art = {}
         bias = get_bias.returnBias(article)
         if bias:
+            relIdx = get_bias.reliabilityToIdx(bias[0])
+            biasIdx = get_bias.biasToIdx(bias[1])
             art['url'] = article
+            art['Accuracy'] = reliabilityStrList[relIdx]
+            art['accuracy_color'] = reliabilityColorList[relIdx]
             art['title'] = extractTitle(article)
-            art['Accuracy'] = get_bias.reliabilityToString(bias[0])
             art['Accuracy_num'] = int(bias[0])
-            art['Bias'] = get_bias.biasToString(bias[1])
+            art['Bias'] = biasStrList[biasIdx]
+            art['bias_color'] = biasColorList[biasIdx]
             art['source'] = bias[2]
             out.append(art)
 
@@ -154,11 +197,15 @@ def returnBiases(url):
     bias = get_bias.returnBias(url)
     if not bias:
         return out
+
+    relIdx = get_bias.reliabilityToIdx(bias[0])
+    biasIdx = get_bias.biasToIdx(bias[1])
+
     art['url'] = url
+    art['Accuracy'] = reliabilityStrList[relIdx]
     art['title'] = extractTitle(url)
-    art['Accuracy'] = get_bias.reliabilityToString(bias[0])
     art['Accuracy_num'] = int(bias[0])
-    art['Bias'] = get_bias.biasToString(bias[1])
+    art['Bias'] = biasStrList[biasIdx]
     out.insert(0,art)
 
     #return out[1:] if out else []
