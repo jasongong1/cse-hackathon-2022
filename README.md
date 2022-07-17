@@ -3,7 +3,7 @@ Counterpoint is the project for the 2022 CSEsoc Hackathon, our aim is to counter
 
 ## How it works
 1. Counterpoint takes in a URL from the user and compares it's parent site to data compilated from Ad Fontes Media. It displays the political bias and accuracy based on this data.
-2. It uses a webscrapper to search up similar articles on Google and displays them on the same page with their political bias and accuracy sorted by their accuracy from most accurate at the top.
+2. It uses a web scraper to search up similar articles on Google and displays them on the same page with their political bias and accuracy sorted by their accuracy from most accurate at the top.
 
 ## Team members
 * Jay Chen
