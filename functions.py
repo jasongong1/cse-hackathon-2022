@@ -78,13 +78,7 @@ def extractTitle(url):
         print(title)
     except:
         return url
-        
-        print("hi")
-    #title = removeLastChar('-', title)
-    #print(title)
     return title
-    #except:
-    #    return 0
 
 # Search similar article by title
 def searchArticlesByUrl(url):
@@ -210,19 +204,4 @@ def returnBiases(url):
     art['bias_color'] = biasColorList[biasIdx]
     art['source'] = bias[2]
     out.insert(0,art)
-
-    #return out[1:] if out else []
     return out
-
-if __name__ == '__main__':
-    #url = 'https://www.bbc.com/news/world-europe-62189272'
-    #url = "https://www.nytimes.com/2022/07/15/us/politics/joe-manchin-senate-climate-tax.html"
-    #url = "https://www.theguardian.com/us-news/2022/jul/15/ivana-trump-donald-trump-wife-death-cause"
-
-    #url = "https://www.msnbc.com/rachel-maddow-show/maddowblog/republicans-balk-bill-protect-interstate-abortion-travel-rcna38404"
-    url = "https://www.washingtonpost.com/politics/2022/07/15/secret-service-subpoena-erased-texts/"
-
-
-    print(extractTitle("https://www.wsj.com/articles/jan-6-committee-subpoenas-secret-service-for-deleted-text-messages-11657943958"))
-    #print(searchArticlesByUrl(url))
-    #print(returnBiases(url))

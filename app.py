@@ -17,7 +17,6 @@ def search_url():
     # use the url past from the frontend, get the result, and pass back to frontend
     result = returnBiases(data["url"])
     if (len(result) == 0):
-        # result = [{"url": "xxxxxx", "Accuracy": "30", "Accuracy_num": 20, "Bias": "askcjwoef"}]
         return json.dumps({'error': True})
     return json.dumps({'data': result})
 

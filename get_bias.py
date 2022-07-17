@@ -55,10 +55,3 @@ def reliabilityToIdx(rel):
         return 3
     elif rel < 64:
         return 4
-
-if __name__=="__main__":
-    bias = returnBias("http://www.axios.com")
-    print(bias)
-    print(reliabilityToString(bias[0]))
-    print(biasToString(bias[1]))
-    print(returnBias("https://www.theguardian.com/australia-news/2022/jul/16/anthony-albanese-reverses-decision-to-scrap-pandemic-leave-payments-after-national-cabinet-meets"))
